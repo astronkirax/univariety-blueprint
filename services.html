@@ -1,0 +1,984 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Service Catalog — Career &amp; Admissions Platform</title>
+<link rel="stylesheet" href="assets/styles.css" />
+<style>
+  /* page-specific styles for the standalone catalog */
+  body { background: var(--bg-2); }
+  .page-top {
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    color: #fff; padding: 40px 0 34px;
+  }
+  .page-top .wrap { padding-top: 0; padding-bottom: 0; }
+  .page-top .kicker { color: #93c5fd; font-weight: 700; font-size: 12px; letter-spacing:.08em; text-transform: uppercase; }
+  .page-top h1 { color: #fff; font-size: 30px; margin: 10px 0 8px; letter-spacing: -.5px; }
+  .page-top p { color: #cbd5e1; max-width: 74ch; margin: 0; }
+  .page-top .backlink { color: #93c5fd; text-decoration: none; font-size: 13px; }
+  .page-top .backlink:hover { text-decoration: underline; }
+
+  .catalog-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-top: 22px; }
+  .cs { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); border-radius: 12px; padding: 14px 16px; }
+  .cs .v { font-size: 26px; font-weight: 800; letter-spacing: -.5px; color:#fff; }
+  .cs .l { font-size: 12px; color: #cbd5e1; margin-top: 2px; }
+
+  .badge.college { color:#6941c6; background:#f4f0ff; border-color:#d9d0fb; }
+  .legend { display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin: 20px 0 8px; font-size:13px; color:var(--muted); }
+  .legend .li { display:flex; align-items:center; gap:6px; }
+
+  .controls { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin: 8px 0 4px; }
+  .btn { border:1px solid var(--line); background:#fff; border-radius:8px; padding:8px 14px; font:inherit; font-size:13px; font-weight:600; color:var(--ink-2); cursor:pointer; }
+  .btn:hover { background: var(--bg-2); border-color:#c7d0dd; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color:#fff; }
+  .btn.primary:hover { background: var(--accent-dark); }
+
+  .modnav { display:flex; flex-wrap:wrap; gap:8px; margin: 16px 0 8px; }
+  .modnav a { text-decoration:none; font-size:12.5px; color:var(--ink-2); background:#fff; border:1px solid var(--line); border-radius:999px; padding:6px 12px; }
+  .modnav a:hover { border-color: var(--accent); color: var(--accent); }
+
+  .module { margin-top: 34px; scroll-margin-top: 16px; }
+  .module-head { display:flex; align-items:flex-start; gap:14px; padding-bottom:8px; border-bottom:2px solid var(--line); margin-bottom:14px; }
+  .module-head .mno { flex:none; width:40px; height:40px; border-radius:11px; background:var(--accent-soft); color:var(--accent); display:grid; place-items:center; font-weight:800; font-size:16px; }
+  .module-head h2 { margin:0; font-size:19px; color:var(--ink); }
+  .module-head .mdesc { font-size:13px; color:var(--muted); margin-top:2px; }
+  .module-head .mcount { margin-left:auto; flex:none; font-size:12px; font-weight:700; color:var(--ink-2); background:var(--bg-3); border-radius:999px; padding:5px 12px; white-space:nowrap; }
+
+  .badges { display:inline-flex; gap:6px; margin-left:10px; }
+  .acc-head .name { color: var(--ink); }
+  .acc-body .row .v { font-size:13.5px; }
+
+  @media (max-width: 860px) {
+    .catalog-stats { grid-template-columns: repeat(2,1fr); }
+    .module-head .mcount { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="page-top">
+  <div class="wrap">
+    <a class="backlink" href="index.html">← Back to full blueprint</a>
+    <div class="kicker" style="margin-top:14px">Initial Deliverable · Service Catalog</div>
+    <h1>Proposed Service Catalog</h1>
+    <p>The complete, consolidated set of services for the platform — replicating <strong>Univariety</strong>, integrating <strong>CollegeDekho's</strong> admissions-marketplace capabilities, and adding new services that make the platform more valuable, scalable and competitive. This catalog is the foundation for defining project scope and estimating development cost.</p>
+
+    <div class="catalog-stats">
+      <div class="cs"><div class="v">87</div><div class="l">Total services</div></div>
+      <div class="cs"><div class="v">13</div><div class="l">Modules</div></div>
+      <div class="cs"><div class="v">26 + 12</div><div class="l">Univariety core + CollegeDekho capability</div></div>
+      <div class="cs"><div class="v">49</div><div class="l">New recommended services</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- legend + controls -->
+  <div class="legend">
+    <span class="li"><span class="badge tag">Univariety</span> replicates existing Univariety service</span>
+    <span class="li"><span class="badge college">CollegeDekho</span> admissions-marketplace capability</span>
+    <span class="li"><span class="badge new">New</span> new recommended addition</span>
+  </div>
+
+  <div class="controls">
+    <button class="btn primary" id="expandAll">Expand all</button>
+    <button class="btn" id="collapseAll">Collapse all</button>
+    <span style="font-size:12.5px;color:var(--muted)">Click any service to see its purpose, need, benefits &amp; value.</span>
+  </div>
+
+  <!-- module quick-nav -->
+  <nav class="modnav">
+    <a href="#m1">1 · Career Discovery</a>
+    <a href="#m2">2 · Counselling</a>
+    <a href="#m3">3 · Admissions Guidance</a>
+    <a href="#m4">4 · Applications &amp; Docs</a>
+    <a href="#m5">5 · Student Profile</a>
+    <a href="#m6">6 · Alumni CRM</a>
+    <a href="#m7">7 · University Engagement</a>
+    <a href="#m8">8 · Admissions Marketplace</a>
+    <a href="#m9">9 · Placements &amp; Jobs</a>
+    <a href="#m10">10 · Engagement &amp; Community</a>
+    <a href="#m11">11 · Analytics</a>
+    <a href="#m12">12 · AI Layer</a>
+    <a href="#m13">13 · Platform &amp; Admin</a>
+  </nav>
+
+  <div class="callout note">This is a scope document, not the final quote. Each service is a scope line-item; the total cost will be sized against the modules you choose to include in Phase 1 vs later phases.</div>
+
+  <!-- ==================================================== MODULE 1 -->
+  <section class="module" id="m1">
+    <div class="module-head"><div class="mno">1</div><div><h2>Career Discovery &amp; Assessment</h2><div class="mdesc">Self-discovery — the entry point of the student journey.</div></div><div class="mcount">7 services</div></div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">1</span> <span class="name">Psychometric Assessment Suite</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Scientifically profile a student's aptitude, interest and personality via multiple validated tests.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">It is the first step of Univariety's journey and the "scientific" hook that justifies the whole program to schools and parents.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Objective self-awareness for students; a defensible basis for counselling and recommendations.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Feeds every downstream module (advisor, recommendations, roadmap) with structured signal.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">2</span> <span class="name">Aptitude Testing</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Measure reasoning, numerical, verbal and spatial ability to match students to suitable fields.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Aptitude is a strong predictor of fit for streams and careers; parents specifically look for it.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Reduces wrong stream/course choices; supports realistic goal-setting.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Strengthens the accuracy of the recommendation and predictive-analytics engines.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">3</span> <span class="name">Interest &amp; Personality Profiling</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Capture interests, values and personality type to align careers with who the student is.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Aptitude alone misses motivation; interest/personality fit drives long-term satisfaction.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">More holistic, human recommendations; better student engagement.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Enables personalised, empathetic AI advisor responses.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">4</span> <span class="name">Skill Assessments</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Test concrete skills (coding, communication, design, domain skills) beyond psychometrics.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Hiring and admissions are moving to skills-based evaluation; Univariety lacks this.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Shows real, demonstrable ability; guides upskilling.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Bridges into job-readiness and placements modules — a new revenue surface.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">5</span> <span class="name">AI-Generated Career Report</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Auto-compose a rich, plain-language report from assessments + live market data.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Static PDF reports are hard to read; AI turns data into a personalised narrative.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Instant, always-available, understandable guidance for students and parents.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">High-margin premium deliverable; a strong D2C lead magnet.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">6</span> <span class="name">Career Research Library &amp; Tools</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Self-serve database of 500+ careers, courses and colleges with 20+ research tools.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Univariety's core exploration layer; lets students explore without a counsellor present.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Scales guidance; keeps students engaged between sessions.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Content moat + data source for the AI advisor and search.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">7</span> <span class="name">Personalized Career Roadmap</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">A living term-by-term plan (subjects, exams, activities, deadlines) that adapts over time.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Students need a "what next" path, not a one-time report.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Turns guidance into ongoing action; drives daily engagement.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Increases retention and stickiness; a key differentiator vs incumbents.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== MODULE 2 -->
+  <section class="module" id="m2">
+    <div class="module-head"><div class="mno">2</div><div><h2>Counselling &amp; Guidance</h2><div class="mdesc">Human + AI guidance that turns insight into decisions.</div></div><div class="mcount">7 services</div></div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">8</span> <span class="name">1:1 Career Counselling</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Personalised sessions with certified counsellors, booked and tracked in-platform.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Human trust converts assessment into real decisions; Univariety's premium service.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">High-value, high-trust guidance; strong parent perception.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Premium revenue line; anchors the whole offering.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">9</span> <span class="name">Group &amp; Webinar Counselling</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Scalable group sessions, workshops and webinars for cohorts of students/parents.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">1:1 doesn't scale to a whole school; group formats cover the base efficiently.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Lower cost-per-student; broad reach at admission season.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Improves service margins and school-wide activation.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">10</span> <span class="name">Video Counselling</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Native video sessions with recording, transcripts and AI summaries.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Remote, higher-quality sessions; auto-notes free counsellors from admin.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Reach beyond geography; searchable session history.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Data for co-pilot and outcome analytics.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">11</span> <span class="name">AI Career Advisor (24/7)</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Always-on chat/voice advisor that knows the student's profile and answers "what next?".</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Counsellors are scarce; students need answers instantly, any time.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Infinite scale, consistent guidance, always available.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">The platform's flagship differentiator; deflects routine queries from humans.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">12</span> <span class="name">Counsellor Co-Pilot</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">AI that pre-briefs counsellors, drafts summaries and tracks action items.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Counsellor productivity is the main services bottleneck.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">One counsellor can serve up to ~10× more students.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Directly improves service gross margins and scalability.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">13</span> <span class="name">Stream &amp; Subject Selection Guidance</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Guide grade 9–10 students to the right stream and grade 11–12 subject combinations.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">A critical, high-stakes decision point parents worry about most.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Prevents costly wrong choices; clear, timely direction.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">High perceived value that drives school adoption.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">14</span> <span class="name">Parent Counselling &amp; Guidance</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Sessions and resources aimed at parents, who are the real decision-makers.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Parent buy-in drives both the student's decisions and school renewals.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Aligned families; higher satisfaction and trust.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Strengthens the parent relationship — key to D2C upsell.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== MODULE 3 -->
+  <section class="module" id="m3">
+    <div class="module-head"><div class="mno">3</div><div><h2>College &amp; Admissions Guidance</h2><div class="mdesc">Advisory, AI-led help getting into the right college.</div></div><div class="mcount">8 services</div></div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">15</span> <span class="name">AI College Recommendation Engine</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Rank best-fit colleges from profile, preferences and real outcome data.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Students face thousands of options with no reliable "fit" signal.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Faster, smarter, personalised shortlists.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Powers the admissions marketplace and lead quality.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">16</span> <span class="name">Predictive Admission Analytics (College Predictor)</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Estimate a student's realistic chance of admission at a given college/course.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Removes guesswork and anxiety; a proven CollegeDekho-style hook.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Realistic targets; balanced reach/safe lists.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">High-engagement tool that pulls organic traffic and leads.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">17</span> <span class="name">Application Tracking &amp; Shortlisting</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Track shortlists, deadlines, tasks and status across all applications.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Applications are complex and easy to fumble; missed deadlines are costly.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Nothing slips; clear visibility for students, parents and counsellors.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Foundation for the agentic application agent.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">18</span> <span class="name">International Admissions &amp; Study Abroad</span><span class="badges"><span class="badge college">CollegeDekho</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Country/university workflows, tests, essays and timelines for studying abroad.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Fast-growing, high-value demand that Univariety only lightly serves.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Access to a premium, high-ARPU student segment.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Opens international revenue and partner commissions.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">19</span> <span class="name">Scholarship Recommendation Engine</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Match students to scholarships by eligibility, with deadline alerts.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Scholarship info is fragmented; families miss funding they qualify for.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Real financial impact; strong goodwill and engagement.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Differentiator + potential partner/commission revenue.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">20</span> <span class="name">Education Loan Assistance</span><span class="badges"><span class="badge college">CollegeDekho</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Help families discover, compare and apply for education loans.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Financing is a major admission blocker; a CollegeDekho monetisation channel.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Removes an affordability barrier to enrolment.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Lender partnerships create commission revenue.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">21</span> <span class="name">Visa &amp; Pre-Departure Guidance</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Guide study-abroad students through visas, documentation and pre-departure prep.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Completes the international journey end-to-end.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Higher conversion and satisfaction for abroad-bound students.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Deepens the premium international offering.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">22</span> <span class="name">Entrance Exam Guidance &amp; Prep Hub</span><span class="badges"><span class="badge college">CollegeDekho</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Info, timelines and prep resources for entrance exams (JEE, NEET, CUET, SAT, etc.).</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Exams gate admissions; a core CollegeDekho traffic and utility area.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Central place for exam planning; drives repeat visits.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Test-prep partnerships and cross-sell opportunities.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== MODULE 4 -->
+  <section class="module" id="m4">
+    <div class="module-head"><div class="mno">4</div><div><h2>Application &amp; Document Management</h2><div class="mdesc">Everything needed to actually apply — built and stored.</div></div><div class="mcount">5 services</div></div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">23</span> <span class="name">Resume / CV Builder</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Guided builder for professional resumes/CVs with templates.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Students need application-ready documents; Univariety lacks this.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Faster, better applications; boosts confidence.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Bridges into job-readiness and placements.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">24</span> <span class="name">SOP &amp; Essay Builder</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">AI-assisted drafting of statements of purpose and application essays.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Essays make or break admissions, especially abroad.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Stronger applications; less stress.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Premium AI feature with authenticity safeguards.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">25</span> <span class="name">Document Vault &amp; Management</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Secure storage for marksheets, certificates, IDs and application documents.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Documents are scattered and repeatedly re-requested during applications.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">One secure place; easy reuse and sharing.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Foundation for verified portfolios and autofill.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">26</span> <span class="name">Transcript / Marksheet OCR &amp; Verification</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Extract structured data from scanned academic documents and verify them.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Manual data entry is slow and error-prone; verification builds trust.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Instant profile population; credible records.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Enables autofill and trustworthy analytics.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">27</span> <span class="name">Recommendation Letter (LOR) Management</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Request, track and manage letters of recommendation from teachers/mentors.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">LORs are a fiddly, deadline-sensitive part of applications.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Nothing missed; smooth process for recommenders.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Completes the end-to-end application workflow.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== MODULE 5 -->
+  <section class="module" id="m5">
+    <div class="module-head"><div class="mno">5</div><div><h2>Student Digital Profile &amp; Portfolio</h2><div class="mdesc">A verified, portable record of who the student is.</div></div><div class="mcount">4 services</div></div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">28</span> <span class="name">Student Digital Portfolio</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">A showcase of projects, activities and achievements, shareable with colleges/employers.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Holistic admissions and hiring value more than marks.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Students stand out; evidence beyond grades.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Increases lifetime engagement and portability.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">29</span> <span class="name">Verified Credential Wallet</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Store tamper-proof, verified certificates and credentials.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Credential fraud is common; verification adds trust and value.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Trusted, one-click sharing of achievements.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Verification fees + trust differentiator.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">30</span> <span class="name">Achievement &amp; Activity Tracker</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Continuously log competitions, activities, projects and milestones.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Achievements are forgotten by application time.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">A ready record when it matters; motivating progress view.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Feeds portfolio, roadmap and analytics.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">31</span> <span class="name">Unified Student Profile (360° View)</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">A single record uniting assessments, activities, applications and outcomes.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Data is siloed across modules; one view powers everything.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Coherent guidance; no repeated data entry.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">The data backbone for all AI features.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== MODULE 6 -->
+  <section class="module" id="m6">
+    <div class="module-head"><div class="mno">6</div><div><h2>Alumni Management (Alumni CRM)</h2><div class="mdesc">Univariety's hardest-to-copy moat — the alumni network.</div></div><div class="mcount">9 services</div></div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">32</span> <span class="name">Alumni Directory &amp; Database</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Central, searchable database of an institution's alumni.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Schools otherwise lose contact with alumni entirely.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Reactivates a dormant, valuable network.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">The institutional asset that anchors recurring value.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">33</span> <span class="name">Alumni Onboarding &amp; Verification</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Invite, register and verify alumni into the platform.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">A trusted, real network requires verified members.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Clean, credible data; safe interactions.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Quality base for mentorship and giving.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">34</span> <span class="name">Alumni–Student Mentorship Matching</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Intelligently match students to alumni mentors by interest, course and career.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Alumni advice is Univariety's unique, defensible differentiator.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Real-world guidance from those who walked the path.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">The moat — hard for pure test vendors to replicate.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">35</span> <span class="name">Engagement Tracking &amp; Scoring</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Measure how actively each alumnus engages across the platform.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Institutions need to know who's active and reachable.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Targeted outreach; healthier network.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Signals for giving-propensity and mentorship supply.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">36</span> <span class="name">Alumni Events &amp; Reunions</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Plan, register and run online/offline alumni events and reunions.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Events are the main driver of alumni re-engagement.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Stronger community; more participation.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Boosts stickiness and fundraising outcomes.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">37</span> <span class="name">Fundraising &amp; Giving</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Run donation drives and recurring-giving campaigns with impact reporting.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Monetises the alumni base directly for the institution.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">New revenue for schools; clear ROI story.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Strengthens the school's reason to renew.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">38</span> <span class="name">Alumni-Led Recruitment</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Let alumni post jobs/internships and refer current students.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Alumni are a natural, trusted hiring channel.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Real opportunities for students; engaged alumni.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Links alumni CRM to the placements module.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">39</span> <span class="name">Alumni Communication &amp; Newsletters</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Email campaigns, newsletters and announcements to the alumni base.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Consistent communication keeps the network warm.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Sustained engagement; better event/giving turnout.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">AI-drafted content lowers institutional effort.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">40</span> <span class="name">Industry Mentor Network</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Extend mentorship beyond alumni to verified industry professionals.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Some students need niche expertise no alumnus offers.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Broader, richer mentorship coverage.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Cross-institution network effect and premium access.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== MODULE 7 -->
+  <section class="module" id="m7">
+    <div class="module-head"><div class="mno">7</div><div><h2>University / College Engagement</h2><div class="mdesc">The two-sided revenue engine — institutions pay for access.</div></div><div class="mcount">5 services</div></div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">41</span> <span class="name">University Connect</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Connect students directly with universities, their profiles and events.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Two-sided value: students get access, universities get qualified interest.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Exposure students couldn't get alone.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Creates a second, university-funded revenue side.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">42</span> <span class="name">Virtual Fairs &amp; Events</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Host online college/career fairs with booths, sessions and chat.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Scales university exposure beyond physical events.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Wider reach; measurable engagement.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Sponsorship and lead-generation revenue.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">43</span> <span class="name">University Profiles &amp; Showcases</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Rich, branded university pages with courses, outcomes and media.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Students need trustworthy, comparable information.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Better-informed decisions; branding for universities.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Premium/featured placements as a revenue line.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">44</span> <span class="name">Lead Management for Universities</span><span class="badges"><span class="badge college">CollegeDekho</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Capture, qualify and route student interest as leads to universities.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Lead-gen is CollegeDekho's core monetisation model.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Direct, measurable ROI for universities.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">High-margin, scalable revenue on admissions intent.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">45</span> <span class="name">University Intelligence Dashboard</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Analytics for universities: funnel, demand signals and brand performance.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Universities want proof and insight, not just leads.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Transparent value; better retention of university clients.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">A premium subscription tier for institutions.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== MODULE 8 -->
+  <section class="module" id="m8">
+    <div class="module-head"><div class="mno">8</div><div><h2>Admissions Marketplace &amp; College Discovery</h2><div class="mdesc">The CollegeDekho layer — discover, compare, apply.</div></div><div class="mcount">8 services</div></div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">46</span> <span class="name">College Search &amp; Discovery Database</span><span class="badges"><span class="badge college">CollegeDekho</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Comprehensive, filterable database of colleges, courses and fees.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">The top-of-funnel utility that draws students in (CollegeDekho's core).</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">One trusted place to find and filter options.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Massive organic traffic that feeds every revenue line.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">47</span> <span class="name">College Compare</span><span class="badges"><span class="badge college">CollegeDekho</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Side-by-side comparison of colleges on fees, placements, rankings and more.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Decision-making requires apples-to-apples comparison.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Confident, faster choices.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">High-intent engagement that converts to leads.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">48</span> <span class="name">College Reviews &amp; Ratings</span><span class="badges"><span class="badge college">CollegeDekho</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Authentic student/alumni reviews and ratings of colleges.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Social proof is decisive and builds SEO/traffic.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Trustworthy, real-world perspective.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">User-generated content moat and engagement.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">49</span> <span class="name">Course &amp; Program Finder</span><span class="badges"><span class="badge college">CollegeDekho</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Discover courses/programs and the colleges that offer them.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Many students choose a field before an institution.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Course-first discovery path.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">More entry points to the funnel.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">50</span> <span class="name">Common Application Platform</span><span class="badges"><span class="badge college">CollegeDekho</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Apply to multiple colleges through one unified form.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Repetitive applications are a major friction point.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Apply once, reach many; higher completion.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Owns the transaction — the highest-value touchpoint.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">51</span> <span class="name">Direct / Assured Admissions</span><span class="badges"><span class="badge college">CollegeDekho</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Facilitate direct admission tie-ups between students and partner colleges.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">CollegeDekho's key monetisation — colleges pay per enrolled student.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Guaranteed pathways for students; enrolments for colleges.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Direct, high-value commission revenue.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">52</span> <span class="name">Admission Helpline &amp; Lead Routing</span><span class="badges"><span class="badge college">CollegeDekho</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Guided-admission helpline (human + AI) that qualifies and routes students.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Students need hand-holding through admissions; drives conversion.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Higher conversion; better-matched enrolments.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Converts traffic into monetisable, qualified leads.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">53</span> <span class="name">Cutoffs, News &amp; Exam Updates Hub</span><span class="badges"><span class="badge college">CollegeDekho</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Timely cutoffs, admission news, dates and exam updates.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Fresh, time-sensitive info drives repeat visits and SEO.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Students stay informed at the right moment.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Sustained traffic engine feeding the funnel.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== MODULE 9 -->
+  <section class="module" id="m9">
+    <div class="module-head"><div class="mno">9</div><div><h2>Placements &amp; Job Readiness</h2><div class="mdesc">Extends the journey from admission to employability.</div></div><div class="mcount">7 services</div></div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">54</span> <span class="name">Employer / Recruiter Portal</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Let employers post roles and discover student/alumni talent.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Closes the loop from guidance to actual jobs.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Real opportunities; employability outcomes.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Employer subscriptions and a talent-graph asset.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">55</span> <span class="name">Job &amp; Internship Board</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Curated listings of jobs and internships relevant to students.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">A gap across most incumbents; students want opportunities, not just advice.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Practical experience and early careers.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Recurring engagement and partner revenue.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">56</span> <span class="name">AI Interview Preparation</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Simulated interviews with real-time feedback on content and delivery.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Interview skills are rarely taught but decisive.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Confidence and readiness; measurable improvement.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Premium AI feature with clear outcomes.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">57</span> <span class="name">Mock Interviews &amp; Feedback</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Human/mentor-led mock interviews with structured feedback.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Complements AI prep with real human judgement.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Authentic practice; actionable critique.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Engages the alumni/mentor network further.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">58</span> <span class="name">Aptitude &amp; Job-Readiness Training</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Courses and drills on aptitude, communication and workplace skills.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Students need employability skills schools don't teach.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Better placement outcomes.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Content/course revenue and outcome proof.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">59</span> <span class="name">AI Resume Optimization (ATS)</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Score and improve resumes/SOPs against ATS and role requirements.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Most resumes fail automated screening.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">More interview callbacks.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">High-value premium tool tied to outcomes.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">60</span> <span class="name">Internship Assistance &amp; Tracking</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Find, apply to and track internships and their outcomes.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Internships are increasingly essential for admissions and jobs.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Experience that strengthens profiles.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Feeds the portfolio and employer network.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== MODULE 10 -->
+  <section class="module" id="m10">
+    <div class="module-head"><div class="mno">10</div><div><h2>Engagement, Community &amp; Communication</h2><div class="mdesc">Drives daily active use and keeps everyone connected.</div></div><div class="mcount">6 services</div></div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">61</span> <span class="name">Student Engagement &amp; Gamification</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Nudges, streaks, milestones and rewards to drive consistent use.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Guidance tools often see low ongoing engagement.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Higher activity, retention and outcomes.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Improves every engagement-linked metric and renewal.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">62</span> <span class="name">Community Forums &amp; Groups</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Moderated peer + alumni communities, AMAs and interest groups.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Peers learn from peers; community builds belonging.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Support network; scalable peer guidance.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Network effects and reduced support load.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">63</span> <span class="name">Multichannel Notifications</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Timely alerts via email, SMS, WhatsApp and push.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Deadlines and nudges must reach students and parents reliably.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Nothing missed; re-engages dormant users.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Backbone of engagement and conversion.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">64</span> <span class="name">Events Management</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Create, register and manage all platform events (webinars, fairs, workshops).</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Events drive engagement across students, parents and alumni.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Organised, measurable participation.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Shared infrastructure across modules.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">65</span> <span class="name">Parent Engagement Portal</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">A dedicated space for parents to follow progress and next steps.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Parents are the buyers; keeping them informed drives value.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Transparency and trust.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Fuels D2C upsell and school renewals.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">66</span> <span class="name">Content &amp; Resource Hub</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Blog, guides, success stories and resources on careers and colleges.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Content is Univariety's/competitors' key acquisition funnel.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Organic reach and credibility.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Low-cost, compounding lead generation.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== MODULE 11 -->
+  <section class="module" id="m11">
+    <div class="module-head"><div class="mno">11</div><div><h2>Analytics &amp; Dashboards</h2><div class="mdesc">Proof of outcomes — what makes schools renew.</div></div><div class="mcount">6 services</div></div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">67</span> <span class="name">Student Analytics</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Track each student's activity, progress and milestones.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Counsellors and schools must manage caseloads and progress.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Visibility into who needs attention.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Enables timely, targeted intervention.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">68</span> <span class="name">Student Success &amp; Outcome Analytics</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Measure real outcomes — admissions, placements, satisfaction.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Outcomes are the ultimate proof of ROI for schools.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Evidence to justify renewals and pricing.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Enables outcome-based pricing — a key differentiator.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">69</span> <span class="name">School / Institution Analytics Dashboard</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Institution-level view of engagement, coverage and outcomes.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">School leadership needs a program-health snapshot.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Clear ROI story for administrators.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Drives renewals and expansion.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">70</span> <span class="name">Cohort Benchmarking</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Compare a school's cohort against anonymised peer schools.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Context turns raw numbers into meaning.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">"How do we compare?" answered credibly.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">A unique data-network advantage as scale grows.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">71</span> <span class="name">Parent Dashboard</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Parent-facing view of progress, recommendations and next steps.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Parents want a clear line of sight into their child's journey.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Confidence and engagement from the buyer.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Supports premium D2C plans.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">72</span> <span class="name">Admin Reporting &amp; Exports</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Configurable reports and data exports for administrators.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Institutions need reports for internal and board use.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Self-serve reporting; less manual work.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Reduces support burden; enterprise-ready.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== MODULE 12 -->
+  <section class="module" id="m12">
+    <div class="module-head"><div class="mno">12</div><div><h2>AI &amp; Intelligence Layer</h2><div class="mdesc">The cross-cutting engine that powers everything above.</div></div><div class="mcount">7 services</div></div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">73</span> <span class="name">AI Chatbot / Virtual Assistant</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Answer student/parent questions, qualify leads and guide onboarding.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Deflects routine queries and captures intent 24/7.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Instant support; lower support cost.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Improves conversion and CSAT at scale.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">74</span> <span class="name">Recommendation Engine</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Cross-platform recommendations for careers, colleges, scholarships and mentors.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Personalisation is what makes guidance feel relevant.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Better matches; higher engagement.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Shared intelligence across all modules.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">75</span> <span class="name">Predictive Analytics Engine</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Predict admission chances, at-risk students, giving propensity and churn.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Proactive action beats reactive; a strong data differentiator.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Early intervention and smarter targeting.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Powers predictor tools and retention.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">76</span> <span class="name">Document Intelligence &amp; OCR</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Read and structure transcripts, SOPs, LORs and scholarship documents.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Automates tedious data entry and verification.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Speed and accuracy across workflows.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Reusable service feeding many modules.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">77</span> <span class="name">Generative AI Content Studio</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Draft essays, reports, alumni outreach and marketing content with guardrails.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Content creation is a major, repeatable time sink.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Faster, consistent, on-brand content.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Efficiency across product and go-to-market.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">78</span> <span class="name">AI Voice Assistant (multilingual)</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Voice-based advisor and mock interviews in regional languages.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Reaches tier-2/3 and non-English users; accessibility.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Inclusive, natural interaction.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Unlocks a large underserved market.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">79</span> <span class="name">Agentic Application Agent</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">An autonomous agent that tracks deadlines, drafts, reminds and books — with approvals.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">The long-term differentiator no competitor owns yet.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Dramatically reduces application burden.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">A defensible, future-facing moat.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== MODULE 13 -->
+  <section class="module" id="m13">
+    <div class="module-head"><div class="mno">13</div><div><h2>Platform, Admin &amp; Integrations</h2><div class="mdesc">The foundation every other module runs on.</div></div><div class="mcount">8 services</div></div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">80</span> <span class="name">Multi-Tenant Admin Console</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Manage many institutions, users and modules from one control plane.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">A B2B platform must isolate and administer each client cleanly.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Efficient operations; clean separation of data.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Enables scale to thousands of institutions.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">81</span> <span class="name">Role-Based Access &amp; SSO</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Granular permissions for students, parents, counsellors, admins + single sign-on.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Security and enterprise SSO are B2B requirements.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Right access for each role; easy login.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Removes an enterprise adoption blocker.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">82</span> <span class="name">White-Label &amp; Branding</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Re-brand the platform per school/chain with custom domains and themes.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Institutions want the program to feel like theirs.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Stronger institutional ownership and pride.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Unlocks white-label revenue and large chains.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">83</span> <span class="name">Open API &amp; Developer Platform</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">APIs for assessments, recommendations and data for partners to build on.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Ecosystems extend reach and create new revenue.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Integrations without core team effort.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Metered API revenue and platform stickiness.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">84</span> <span class="name">Payment Gateway &amp; Billing</span><span class="badges"><span class="badge tag">Univariety</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Collect subscriptions, service fees, donations and marketplace payments.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Every revenue line needs reliable billing.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Smooth transactions; automated invoicing.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Enables all monetisation, including recurring giving.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">85</span> <span class="name">Data Privacy &amp; Consent Management</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Consent, data-minimisation and rights management (DPDP Act, GDPR).</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Handling minors' data makes compliance non-negotiable.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Legal safety and user trust.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">A trust differentiator and risk shield.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">86</span> <span class="name">Third-Party Integrations Hub</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Connect to school ERPs/SIS, LMS, communication and CRM tools.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Schools run many systems; integration reduces friction.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Fits existing workflows; faster onboarding.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Lowers switching cost and boosts adoption.</div></div>
+      </div>
+    </div>
+
+    <div class="acc"><button class="acc-head"><span class="num-badge">87</span> <span class="name">Mobile Apps (iOS &amp; Android)</span><span class="badges"><span class="badge new">New</span></span><span class="chev">▶</span></button>
+      <div class="acc-body">
+        <div class="row"><div class="k">Purpose</div><div class="v">Native mobile apps for students, parents, counsellors and alumni.</div></div>
+        <div class="row"><div class="k">Why needed</div><div class="v">Mobile is the primary device for Indian students.</div></div>
+        <div class="row"><div class="k">Benefits</div><div class="v">Higher engagement; push notifications.</div></div>
+        <div class="row"><div class="k">Value added</div><div class="v">Daily-use surface that lifts every metric.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="callout" style="margin-top:34px"><b>Next step:</b> confirm which modules are in-scope for Phase 1 (MVP) vs later phases. The development cost estimate will be built by sizing each in-scope service as a line-item against this catalog.</div>
+
+  <p class="footer-note">Service catalog for scope &amp; cost estimation · 87 services / 13 modules · Categories: 26 Univariety-core, 12 CollegeDekho-capability, 49 new recommendations. Derived from the full blueprint (see <a href="index.html">index</a>).</p>
+
+</div><!-- /wrap -->
+
+<script>
+(function(){
+  "use strict";
+  // accordion toggle
+  document.addEventListener("click", function(e){
+    var head = e.target.closest(".acc-head");
+    if(!head) return;
+    var acc = head.closest(".acc");
+    if(acc) acc.classList.toggle("open");
+  });
+  // expand / collapse all
+  var accs = Array.prototype.slice.call(document.querySelectorAll(".acc"));
+  var ea = document.getElementById("expandAll");
+  var ca = document.getElementById("collapseAll");
+  if(ea) ea.addEventListener("click", function(){ accs.forEach(function(a){ a.classList.add("open"); }); });
+  if(ca) ca.addEventListener("click", function(){ accs.forEach(function(a){ a.classList.remove("open"); }); });
+})();
+</script>
+</body>
+</html>
